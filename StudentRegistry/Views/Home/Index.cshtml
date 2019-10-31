@@ -1,0 +1,127 @@
+﻿@model PaginatedList<StudentRegistry.Models.Student>
+@{
+    ViewData["Title"] = "სტუდენტების სია";
+}
+
+<h1>სტუდენტების სია</h1>
+<div class="row mt-4" >
+    <p>
+        <a asp-action="CreateUpdate" class="btn btn-success">დამატება</a>
+    </p>
+</div>
+
+
+
+
+<div class="row">
+    <div class="card">
+        <div class="card-header">გაფილტვრა</div>
+        <div class="card-body">
+            <form asp-action="Index" method="get">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <label class="sr-only" for="personalNr">პირადი ნომერი</label>
+                        <input type="text" name="personalNr" class="form-control mb-2" id="personalNr" placeholder="პირადი ნომერი" value="@ViewData["CurrentPnFilter"]">
+                    </div>
+                    <div class="col-auto">
+                        <label class="sr-only" for="bDateStart"> დაბადების თარიღი -დან</label>
+                        <input type="text" name="bDateStart" class="form-control mb-2 datepicker" id="bDateStart" placeholder="თარიღი -დან" value="@ViewData["CurrentdStartFilter"]">
+                    </div>
+                    <div class="col-auto">
+                        <label class="sr-only" for="bDateEnd"> დაბადების თარიღი -დან</label>
+                        <input type="text" name="bDateEnd" class="form-control mb-2 datepicker" id="bDateEnd" placeholder="თარიღი -მდე" value="@ViewData["CurrentdEndFilter"]">
+                    </div>
+
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2">გაფილტვრა</button>
+                        <a asp-action="Index" class="btn btn-light mb-2">გასუფთავება</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+</div>
+
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    სახელი
+                </th>
+                <th>
+                    გვარი
+                </th>
+                <th>
+                    დაბადების თარიღი
+                </th>
+                <th>
+                    პირადი ნომერი
+                </th>
+                <th>
+                    სქესი
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonalNr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender.GenderName)
+                    </td>
+                    <td>
+                        <a asp-action="CreateUpdate" asp-route-id="@item.Id" class="btn btn-secondary">რედაქტირება</a>
+
+                        <button data-id="@item.Id" class="btn btn-danger deleteBtn">წაშლა</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+Page @Model.PageIndex out of @Model.TotalPages
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentPnFilter="@ViewData["CurrentPnFilter"]"
+   asp-route-currentdStartFilter="@ViewData["CurrentdStartFilter"]"
+   asp-route-currentdEndFilter="@ViewData["CurrentdEndFilter"]"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentPnFilter="@ViewData["CurrentPnFilter"]"
+   asp-route-currentdStartFilter="@ViewData["CurrentdStartFilter"]"
+   asp-route-currentdEndFilter="@ViewData["CurrentdEndFilter"]"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "AntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+

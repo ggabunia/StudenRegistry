@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>StudentRegistry.BusinessLogic</AssemblyName>
+    <RootNamespace>StudentRegistry.BusinessLogic</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentRegistry.DataAccess\StudentRegistry.DataAccess.csproj" />
+    <ProjectReference Include="..\StudentRegistry.Models\StudentRegistry.Models.csproj" />
+  </ItemGroup>
+
+
+</Project>
