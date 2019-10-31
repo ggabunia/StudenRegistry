@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudentRegistry.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace StudentRegistry.DataAccess.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
-                    PersonalNr = table.Column<string>(nullable: false),
+                    PersonalNr = table.Column<string>(maxLength: 11, nullable: false),
                     GenderID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

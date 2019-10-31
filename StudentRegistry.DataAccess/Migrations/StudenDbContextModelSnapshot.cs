@@ -69,7 +69,8 @@ namespace StudentRegistry.DataAccess.Migrations
 
                     b.Property<string>("PersonalNr")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
 
                     b.HasKey("Id");
 

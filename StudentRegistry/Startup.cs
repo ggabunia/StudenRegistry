@@ -27,8 +27,10 @@ namespace StudentRegistry
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //services.AddDbContext<StudenDbContext>(dbContexOptionsBuilder
+            //    => dbContexOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));  
             services.AddDbContext<StudenDbContext>(dbContexOptionsBuilder
-                => dbContexOptionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                => dbContexOptionsBuilder.UseSqlite(Configuration.GetConnectionString("SqliteString")));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

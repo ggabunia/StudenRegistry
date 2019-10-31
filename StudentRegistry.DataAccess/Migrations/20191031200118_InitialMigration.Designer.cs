@@ -10,8 +10,8 @@ using StudentRegistry.DataAccess;
 namespace StudentRegistry.DataAccess.Migrations
 {
     [DbContext(typeof(StudenDbContext))]
-    [Migration("20191031150444_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20191031200118_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,7 +71,8 @@ namespace StudentRegistry.DataAccess.Migrations
 
                     b.Property<string>("PersonalNr")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
 
                     b.HasKey("Id");
 

@@ -54,7 +54,7 @@ namespace StudentRegistry.Controllers
                 ViewData["CurrentdEndFilter"] = bDateEnd.Value.ToString("yyyy-MM-dd");
             }
 
-            int pageSize = 10;
+            int pageSize = 5;
             return View(PaginatedList<Student>.GetList(students, pageNumber ?? 1, pageSize));
         }
 
