@@ -56,7 +56,6 @@ namespace StudentRegistry.Controllers
 
             int pageSize = 10;
             return View(PaginatedList<Student>.GetList(students, pageNumber ?? 1, pageSize));
-            //return View(students);
         }
 
         public IActionResult CreateUpdate(int? id)
@@ -159,8 +158,6 @@ namespace StudentRegistry.Controllers
             {
                 return Content("წაშლა ვერ მოხერხდა");
             }
-           
-            return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
