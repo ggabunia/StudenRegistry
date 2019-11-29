@@ -42,6 +42,38 @@ namespace StudentRegistryAPI.Controllers
                 }).ToList());
         }
 
+        [HttpPost("filter")]
+        public async Task<ActionResult<IEnumerable<StudentVM>>> GetFilteredStudents(FilterParameters parameters)
+        {
+            string personalNr = parameters.personalNr;
+            DateTime? bDateStart = parameters.bDateStart;
+            DateTime? bDateEnd = parameters.bDateEnd;
+            var students = _context.StudentRepository.Get(includeProperties: "Gender");
+            if (!String.IsNullOrWhiteSpace(personalNr))
+            {
+                students = students.Where(c => c.PersonalNr.Contains(personalNr));
+            }
+            if (bDateStart.HasValue)
+            {
+                students = students.Where(c => c.BirthDate >= bDateStart.Value);
+               
+            }
+            if (bDateEnd.HasValue)
+            {
+                students = students.Where(c => c.BirthDate <= bDateEnd.Value);             
+            }
+            return await Task.FromResult(
+               students.Select(s => new StudentVM
+               {
+                   id = s.Id,
+                   firstName = s.FirstName,
+                   lastName = s.LastName,
+                   pN = s.PersonalNr,
+                   DoB = s.BirthDate,
+                   genderId = s.GenderID,
+                   genderName = s.Gender.GenderName
+               }).ToList());
+        }
         // GET: api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentVM>> GetStudent(int id)
@@ -168,6 +200,7 @@ namespace StudentRegistryAPI.Controllers
 
         // DELETE: api/Students/5
         [HttpDelete("{id}")]
+        [Produces("application/json")]
         public async Task<ActionResult<Student>> DeleteStudent(int id)
         {
             if (!StudentExists(id))
